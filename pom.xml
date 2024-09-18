@@ -1,0 +1,88 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.sentrysoftware</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>2</version>
+	</parent>
+
+	<groupId>org.sentrysoftware</groupId>
+	<artifactId>MYARTIFACT</artifactId>
+	<version>0.1.00-SNAPSHOT</version>
+
+	<name>MY PROJECT</name>
+	<description>SOME DESCRIPTION</description>
+
+	<organization>
+		<name>Sentry Software</name>
+		<url>https://sentrysoftware.com</url>
+	</organization>
+
+	<url>https://github.com/sentrysoftware/MYREPO</url>
+	<inceptionYear>2024</inceptionYear>
+
+	<licenses>
+		<license>
+			<name>Apache-2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/sentrysoftware/MYREPO/issues/</url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:git:https://github.com/sentrysoftware/MYREPO.git</connection>
+		<url>https://github.com/sentrysoftware/MYREPO</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<developers>
+		<developer>
+			<name>MY NAME (@MY_ID)</name>
+			<email>MYNAME@sentrysoftware.com</email>
+			<roles>
+				<role>Project founder</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<properties>
+		<!-- Java 11 -->
+		<maven.compiler.target>11</maven.compiler.target>
+
+		<!-- Reproducible Build -->
+		<!-- See https://maven.apache.org/guides/mini/guide-reproducible-builds.html -->
+		<project.build.outputTimestamp>2023-10-25T22:28:48Z</project.build.outputTimestamp>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>5.10.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+</project>
