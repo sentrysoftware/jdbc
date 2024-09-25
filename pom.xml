@@ -198,6 +198,21 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.hubspot.maven.plugins</groupId>
+				<artifactId>prettier-maven-plugin</artifactId>
+				<version>0.21</version>
+				<configuration>
+					<prettierJavaVersion>2.5.0</prettierJavaVersion>
+					<ignoreConfigFile>false</ignoreConfigFile>
+					<ignoreEditorConfig>false</ignoreEditorConfig>
+					<inputGlobs>
+						<inputGlob>src/main/java/**/*.java</inputGlob>
+						<inputGlob>src/test/java/**/*.java</inputGlob>
+						<inputGlob>src/it/java/**/*.java</inputGlob>
+					</inputGlobs>
+				</configuration>
+			</plugin>
 			<!-- site -->
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>

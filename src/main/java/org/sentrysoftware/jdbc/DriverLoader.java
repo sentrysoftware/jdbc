@@ -2,7 +2,7 @@ package org.sentrysoftware.jdbc;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
- * JDBC Client 
+ * JDBC Client
  * ჻჻჻჻჻჻
  * Copyright 2023 Sentry Software
  * ჻჻჻჻჻჻
@@ -30,62 +30,69 @@ import java.util.logging.Logger;
  * A Singleton class to load JDBC drivers only once and in a thread-safe manner.
  */
 public class DriverLoader {
-	// Singleton instance
-	private static DriverLoader instance;
 
-	// List of loaded drivers to avoid loading the same driver multiple times
-	private static final List<String> loadedDrivers = Collections.synchronizedList(new ArrayList<>());
+  // Singleton instance
+  private static DriverLoader instance;
 
-	private DriverLoader() {
-	}
+  // List of loaded drivers to avoid loading the same driver multiple times
+  private static final List<String> loadedDrivers =
+    Collections.synchronizedList(new ArrayList<>());
 
-	/**
-	 * Returns the Singleton instance of DriverLoader.
-	 *
-	 * @return DriverLoader instance
-	 */
-	public static synchronized DriverLoader getInstance() {
-		if (instance == null) {
-			instance = new DriverLoader();
-		}
-		return instance;
-	}
+  private DriverLoader() {}
 
-	public static List<String> getLoadeddrivers() {
-		return loadedDrivers;
-	}
+  /**
+   * Returns the Singleton instance of DriverLoader.
+   *
+   * @return DriverLoader instance
+   */
+  public static synchronized DriverLoader getInstance() {
+    if (instance == null) {
+      instance = new DriverLoader();
+    }
+    return instance;
+  }
 
-	/**
-	 * Loads a JDBC driver if it hasn't been loaded yet.
-	 *
-	 * @param driverClassName The fully qualified name of the driver class
-	 * @throws ClassNotFoundException If the driver class cannot be found
-	 */
-	public synchronized void loadDriver(String driverClassName) throws ClassNotFoundException {
-		if (!loadedDrivers.contains(driverClassName)) {
-			// Disable logging or configure special properties for certain drivers
-			disableLogging(driverClassName);
+  public static List<String> getLoadeddrivers() {
+    return loadedDrivers;
+  }
 
-			Class.forName(driverClassName);
-			loadedDrivers.add(driverClassName);
-		}
-	}
+  /**
+   * Loads a JDBC driver if it hasn't been loaded yet.
+   *
+   * @param driverClassName The fully qualified name of the driver class
+   * @throws ClassNotFoundException If the driver class cannot be found
+   */
+  public synchronized void loadDriver(String driverClassName)
+    throws ClassNotFoundException {
+    if (!loadedDrivers.contains(driverClassName)) {
+      // Disable logging or configure special properties for certain drivers
+      disableLogging(driverClassName);
 
-	/**
-	 * Disables or redirects logging for specific JDBC drivers.
-	 * 
-	 * @param driverClassName The fully qualified name of the driver class
-	 */
-	private void disableLogging(String driverClassName) {
-		if (driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
-			// MS SQL Server: Disable logging
-			Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
-			logger.setLevel(Level.OFF);
+      Class.forName(driverClassName);
+      loadedDrivers.add(driverClassName);
+    }
+  }
 
-		} else if (driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")) {
-			// Derby: Redirect logging (derby.log) to void
-			System.setProperty("derby.stream.error.field", this.getClass().getCanonicalName() + ".DEV_NULL");
-		}
-	}
-
+  /**
+   * Disables or redirects logging for specific JDBC drivers.
+   *
+   * @param driverClassName The fully qualified name of the driver class
+   */
+  private void disableLogging(String driverClassName) {
+    if (
+      driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")
+    ) {
+      // MS SQL Server: Disable logging
+      Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
+      logger.setLevel(Level.OFF);
+    } else if (
+      driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")
+    ) {
+      // Derby: Redirect logging (derby.log) to void
+      System.setProperty(
+        "derby.stream.error.field",
+        this.getClass().getCanonicalName() + ".DEV_NULL"
+      );
+    }
+  }
 }
