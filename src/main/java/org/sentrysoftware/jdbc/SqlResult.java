@@ -1,8 +1,8 @@
-package org.sentrysoftware.example;
+package org.sentrysoftware.jdbc;
 
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
- * MY PROJECT
+ * JDBC Client 
  * ჻჻჻჻჻჻
  * Copyright 2023 Sentry Software
  * ჻჻჻჻჻჻
@@ -20,15 +20,33 @@ package org.sentrysoftware.example;
  * ╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱
  */
 
-/**
- * An Example class
- */
-public class Example {
+import java.util.ArrayList;
+import java.util.List;
 
-	/**
-	 * The main function
-	 */
-	public static void main() {
-		System.out.println("Hello Open-source World!");
+/**
+ * This class represents the result of a SQL query,
+ * including data and any any associated warnings.
+ */
+public class SqlResult {
+
+	private List<List<String>> results;
+	private StringBuilder warnings;
+
+	public SqlResult() {
+		this.results = new ArrayList<>();
+		this.warnings = new StringBuilder();
 	}
+
+	public List<List<String>> getResults() {
+		return results;
+	}
+
+	public StringBuilder getWarnings() {
+		return warnings;
+	}
+
+	public void setWarnings(StringBuilder warnings) {
+		this.warnings = warnings;
+	}
+
 }
