@@ -29,23 +29,23 @@ import java.util.List;
  */
 public class SqlResult {
 
-  private List<List<String>> results;
-  private StringBuilder warnings;
+	private List<List<String>> results;
+	private StringBuilder warnings;
 
-  public SqlResult() {
-    this.results = new ArrayList<>();
-    this.warnings = new StringBuilder();
-  }
+	public SqlResult() {
+		this.results = new ArrayList<>();
+		this.warnings = new StringBuilder();
+	}
 
-  public List<List<String>> getResults() {
-    return results;
-  }
+	public List<List<String>> getResults() {
+		return results;
+	}
 
-  public StringBuilder getWarnings() {
-    return warnings;
-  }
+	public StringBuilder getWarnings() {
+		return warnings;
+	}
 
-  public void setWarnings(StringBuilder warnings) {
-    this.warnings = warnings;
-  }
+	public void setWarnings(StringBuilder warnings) {
+		this.warnings = warnings;
+	}
 }

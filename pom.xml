@@ -10,9 +10,9 @@
 	</parent>
 
 	<artifactId>jdbc</artifactId>
-	<version>0.1.00-SNAPSHOT</version>
+	<version>1.0.00-SNAPSHOT</version>
 
-	<name>jdbc</name>
+	<name>JDBC Client</name>
 	<description>A simple JDBC client to run SQL queries</description>
 
 	<organization>
@@ -20,7 +20,7 @@
 		<url>https://sentrysoftware.com</url>
 	</organization>
 
-	<url>https://github.com/sentrysoftware/jdbc</url>
+	<url>https://sentrysoftware.org/jdbc</url>
 	<inceptionYear>2024</inceptionYear>
 
 	<licenses>
@@ -38,7 +38,7 @@
 
 	<scm>
 		<connection>scm:git:https://github.com/sentrysoftware/jdbc.git</connection>
-		<url>https://github.com/sentrysoftware/jdbc</url>
+		<url>https://sentrysoftware.org/jdbc</url>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -212,6 +212,24 @@
 						<inputGlob>src/it/java/**/*.java</inputGlob>
 					</inputGlobs>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
+					<configLocation>checkstyle.xml</configLocation>
+				</configuration>
+				<executions>
+					<execution>
+						<id>validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>checkstyle</goal>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- site -->
 			<plugin>

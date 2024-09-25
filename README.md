@@ -1,11 +1,11 @@
 # JDBC Client
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/sentrysoftware/oss-maven-template)
-![Build](https://img.shields.io/github/actions/workflow/status/sentrysoftware/oss-maven-template/deploy.yml)
-![GitHub top language](https://img.shields.io/github/languages/top/sentrysoftware/oss-maven-template)
-![License](https://img.shields.io/github/license/sentrysoftware/oss-maven-template)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/sentrysoftware/jdbc)
+![Build](https://img.shields.io/github/actions/workflow/status/sentrysoftware/jdbc/deploy.yml)
+![GitHub top language](https://img.shields.io/github/languages/top/sentrysoftware/jdbc)
+![License](https://img.shields.io/github/license/sentrysoftware/jdbc)
 
-A simple JDBC client for executing SQL queries and connecting to databases like MySQL, PostgreSQL Oracle, and more.
+A simple JDBC client for executing SQL queries and connecting to databases like MySQL, PostgreSQLOracle, and more.
 
 ## Build instructions
 

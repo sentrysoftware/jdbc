@@ -31,68 +31,59 @@ import java.util.logging.Logger;
  */
 public class DriverLoader {
 
-  // Singleton instance
-  private static DriverLoader instance;
+	// Singleton instance
+	private static DriverLoader instance;
 
-  // List of loaded drivers to avoid loading the same driver multiple times
-  private static final List<String> loadedDrivers =
-    Collections.synchronizedList(new ArrayList<>());
+	// List of loaded drivers to avoid loading the same driver multiple times
+	private static final List<String> LOADED_DRIVERS = Collections.synchronizedList(new ArrayList<>());
 
-  private DriverLoader() {}
+	private DriverLoader() {}
 
-  /**
-   * Returns the Singleton instance of DriverLoader.
-   *
-   * @return DriverLoader instance
-   */
-  public static synchronized DriverLoader getInstance() {
-    if (instance == null) {
-      instance = new DriverLoader();
-    }
-    return instance;
-  }
+	/**
+	 * Returns the Singleton instance of DriverLoader.
+	 *
+	 * @return DriverLoader instance
+	 */
+	public static synchronized DriverLoader getInstance() {
+		if (instance == null) {
+			instance = new DriverLoader();
+		}
+		return instance;
+	}
 
-  public static List<String> getLoadeddrivers() {
-    return loadedDrivers;
-  }
+	public static List<String> getLoadeddrivers() {
+		return LOADED_DRIVERS;
+	}
 
-  /**
-   * Loads a JDBC driver if it hasn't been loaded yet.
-   *
-   * @param driverClassName The fully qualified name of the driver class
-   * @throws ClassNotFoundException If the driver class cannot be found
-   */
-  public synchronized void loadDriver(String driverClassName)
-    throws ClassNotFoundException {
-    if (!loadedDrivers.contains(driverClassName)) {
-      // Disable logging or configure special properties for certain drivers
-      disableLogging(driverClassName);
+	/**
+	 * Loads a JDBC driver if it hasn't been loaded yet.
+	 *
+	 * @param driverClassName The fully qualified name of the driver class
+	 * @throws ClassNotFoundException If the driver class cannot be found
+	 */
+	public synchronized void loadDriver(String driverClassName) throws ClassNotFoundException {
+		if (!LOADED_DRIVERS.contains(driverClassName)) {
+			// Disable logging or configure special properties for certain drivers
+			disableLogging(driverClassName);
 
-      Class.forName(driverClassName);
-      loadedDrivers.add(driverClassName);
-    }
-  }
+			Class.forName(driverClassName);
+			LOADED_DRIVERS.add(driverClassName);
+		}
+	}
 
-  /**
-   * Disables or redirects logging for specific JDBC drivers.
-   *
-   * @param driverClassName The fully qualified name of the driver class
-   */
-  private void disableLogging(String driverClassName) {
-    if (
-      driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")
-    ) {
-      // MS SQL Server: Disable logging
-      Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
-      logger.setLevel(Level.OFF);
-    } else if (
-      driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")
-    ) {
-      // Derby: Redirect logging (derby.log) to void
-      System.setProperty(
-        "derby.stream.error.field",
-        this.getClass().getCanonicalName() + ".DEV_NULL"
-      );
-    }
-  }
+	/**
+	 * Disables or redirects logging for specific JDBC drivers.
+	 *
+	 * @param driverClassName The fully qualified name of the driver class
+	 */
+	private void disableLogging(String driverClassName) {
+		if (driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
+			// MS SQL Server: Disable logging
+			Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
+			logger.setLevel(Level.OFF);
+		} else if (driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")) {
+			// Derby: Redirect logging (derby.log) to void
+			System.setProperty("derby.stream.error.field", this.getClass().getCanonicalName() + ".DEV_NULL");
+		}
+	}
 }
