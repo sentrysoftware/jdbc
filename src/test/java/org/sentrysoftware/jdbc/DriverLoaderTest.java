@@ -13,7 +13,7 @@ class DriverLoaderTest {
 
 		// Test loading a valid driver (H2 in this case)
 		assertDoesNotThrow(() -> {
-			driverLoader.loadDriver("org.h2.Driver");
+			driverLoader.loadDriver("org.h2.Driver", true);
 		});
 	}
 
@@ -25,7 +25,7 @@ class DriverLoaderTest {
 		assertThrows(
 			ClassNotFoundException.class,
 			() -> {
-				driverLoader.loadDriver("com.invalid.Driver");
+				driverLoader.loadDriver("com.invalid.Driver", true);
 			}
 		);
 	}

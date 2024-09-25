@@ -64,9 +64,6 @@ public class JdbcClient {
 		// Make sure we're speaking English
 		Locale.setDefault(new Locale("en", "US"));
 
-		// Ensure the driver is loaded for the URL provided
-		loadDriverForUrl(url);
-
 		try (
 			Connection databaseConnection = (username == null || password == null)
 				? DriverManager.getConnection(url)
@@ -110,7 +107,7 @@ public class JdbcClient {
 			if (showWarnings) {
 				SQLWarning warning = queryStatement.getWarnings();
 				while (warning != null) {
-					sqlResult.getWarnings().append("Warning: " + warning.getMessage());
+					sqlResult.appendWarnings(warning.getMessage());
 					warning = warning.getNextWarning();
 				}
 			}
@@ -118,46 +115,6 @@ public class JdbcClient {
 			return sqlResult;
 		} catch (SQLException e) {
 			throw new SQLException("Error executing query: " + e.getMessage(), e);
-		}
-	}
-
-	/**
-	 * Loads the appropriate driver for a given JDBC URL using
-	 * DriverLoader.
-	 *
-	 * @param url The JDBC URL for which to load the driver
-	 * @throws SQLException If the driver cannot be found or loaded
-	 */
-	private static void loadDriverForUrl(String url) throws SQLException {
-		String driverClass = null;
-
-		// Determine which driver to load based on the URL
-		if (url.startsWith("jdbc:jtds:")) {
-			driverClass = "net.sourceforge.jtds.jdbc.Driver";
-		} else if (url.startsWith("jdbc:sqlserver:")) {
-			driverClass = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		} else if (url.startsWith("jdbc:mysql:")) {
-			driverClass = "com.mysql.cj.jdbc.Driver";
-		} else if (url.startsWith("jdbc:oracle:thin:")) {
-			driverClass = "oracle.jdbc.driver.OracleDriver";
-		} else if (url.startsWith("jdbc:postgresql:")) {
-			driverClass = "org.postgresql.Driver";
-		} else if (url.startsWith("jdbc:informix-sqli:") || url.startsWith("jdbc:informix-direct:")) {
-			driverClass = "com.informix.jdbc.IfxDriver";
-		} else if (url.startsWith("jdbc:derby:")) {
-			driverClass = "org.apache.derby.jdbc.EmbeddedDriver";
-		} else if (url.startsWith("jdbc:h2:")) {
-			driverClass = "org.h2.Driver";
-		}
-
-		if (driverClass == null) {
-			throw new SQLException("No suitable driver found for the provided JDBC URL: " + url);
-		}
-
-		try {
-			DriverLoader.getInstance().loadDriver(driverClass);
-		} catch (ClassNotFoundException e) {
-			throw new SQLException("Unable to load JDBC driver for URL: " + url, e);
 		}
 	}
 }

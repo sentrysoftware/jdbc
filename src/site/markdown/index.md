@@ -44,7 +44,7 @@ Invoke the JDBC Client:
 
         // Display the query results
         System.out.println("Query Results:");
-        for (List<String> row : results.getResults()) {
+        for (List<String> row : sqlResult.getResults()) {
             for (String column : row) {
                 System.out.print(column + "\t");
             }
@@ -52,9 +52,9 @@ Invoke the JDBC Client:
         }
 
         // Display any warnings
-        if (results.getWarnings().length() > 0) {
+        if (sqlResult.hasWarnings()) {
             System.out.println("\nSQL Warnings:");
-            System.out.println(results.getWarnings().toString());
+            System.out.println(sqlResult.getWarnings().toString());
         }
     }
 ```
