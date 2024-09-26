@@ -57,6 +57,13 @@
 				<role>maintainer</role>
 			</roles>
 		</developer>
+		<developer>
+			<name>Safae Ajib (@SafaeAJ)</name>
+			<email>safae@sentrysoftware.com</email>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<properties>
