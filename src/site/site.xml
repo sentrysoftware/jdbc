@@ -4,7 +4,7 @@
 	<skin>
 		<groupId>org.sentrysoftware.maven</groupId>
 		<artifactId>sentry-maven-skin</artifactId>
-		<version>6.2.00</version>
+		<version>6.2.01</version>
 	</skin>
 
 	<bannerLeft>
@@ -13,7 +13,7 @@
 	</bannerLeft>
 
 	<custom>
-		<keywords>open source, jdbc</keywords>
+		<keywords>jdbc</keywords>
 	</custom>
 
 	<body>
@@ -24,6 +24,7 @@
 
 		<menu name="User Documentation">
 			<item name="Getting Started" href="index.html" />
+			<item name="Javadoc" href="apidocs/index.html" />
 		</menu>
 
 		<menu ref="reports" />
