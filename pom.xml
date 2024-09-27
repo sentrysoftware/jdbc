@@ -126,7 +126,7 @@
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ucp</artifactId>
-			<version>21.1.0.0</version>
+			<version>23.5.0.24.07</version>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
