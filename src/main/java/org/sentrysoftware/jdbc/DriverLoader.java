@@ -1,5 +1,6 @@
 package org.sentrysoftware.jdbc;
 
+import java.io.OutputStream;
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * JDBC Client
@@ -37,6 +38,17 @@ public class DriverLoader {
 	// List of loaded drivers to avoid loading the same driver multiple times
 	private static final List<String> LOADED_DRIVERS = Collections.synchronizedList(new ArrayList<>());
 
+	/**
+	 * OutputStream to void (useful notably for redirecting Derby's log)
+	 */
+	public static final OutputStream DEV_NULL = new OutputStream() {
+		@Override
+		public void write(int b) {}
+	};
+
+	/**
+	 * Private constructor to implement the Singleton pattern.
+	 */
 	private DriverLoader() {}
 
 	/**
