@@ -74,7 +74,7 @@ public class JdbcClient {
 		}
 
 		try (
-			Connection databaseConnection = (username == null || password == null)
+			Connection databaseConnection = username == null || password == null
 				? DriverManager.getConnection(url)
 				: DriverManager.getConnection(url, username, new String(password));
 			Statement queryStatement = databaseConnection.createStatement()
