@@ -1,6 +1,5 @@
 package org.sentrysoftware.jdbc;
 
-import java.io.OutputStream;
 /*-
  * ╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲
  * JDBC Client
@@ -20,6 +19,7 @@ import java.io.OutputStream;
  * limitations under the License.
  * ╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱╲╱
  */
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,19 +32,18 @@ import java.util.logging.Logger;
  */
 public class DriverLoader {
 
-	// Singleton instance
-	private static DriverLoader instance;
-
-	// List of loaded drivers to avoid loading the same driver multiple times
+	/**
+	 * List of loaded JDBC drivers.
+	 */
 	private static final List<String> LOADED_DRIVERS = Collections.synchronizedList(new ArrayList<>());
 
 	/**
-	 * OutputStream to void (useful notably for redirecting Derby's log)
+	 * SingletonHelper class to implement the Singleton pattern.
 	 */
-	public static final OutputStream DEV_NULL = new OutputStream() {
-		@Override
-		public void write(int b) {}
-	};
+	private static class SingletonHelper {
+
+		private static final DriverLoader INSTANCE = new DriverLoader();
+	}
 
 	/**
 	 * Private constructor to implement the Singleton pattern.
@@ -57,17 +56,14 @@ public class DriverLoader {
 	 * @return DriverLoader instance
 	 */
 	public static synchronized DriverLoader getInstance() {
-		if (instance == null) {
-			instance = new DriverLoader();
-		}
-		return instance;
+		return SingletonHelper.INSTANCE;
 	}
 
 	/**
 	 * Retrieves a list of loaded JDBC drivers.
 	 * @return a list of fully qualified names of the loaded JDBC drivers.
 	 */
-	public static List<String> getLoadeddrivers() {
+	public static List<String> getLoadedDrivers() {
 		return LOADED_DRIVERS;
 	}
 
@@ -78,7 +74,8 @@ public class DriverLoader {
 	 * @param disableLogs     Specifies whether to disable logging for the driver (true to disable, false to enable).
 	 * @throws ClassNotFoundException If the driver class cannot be found
 	 */
-	public synchronized void loadDriver(String driverClassName, boolean disableLogs) throws ClassNotFoundException {
+	public synchronized void loadDriver(final String driverClassName, final boolean disableLogs)
+		throws ClassNotFoundException {
 		if (!LOADED_DRIVERS.contains(driverClassName)) {
 			if (disableLogs) {
 				disableLogging(driverClassName);
@@ -94,11 +91,10 @@ public class DriverLoader {
 	 *
 	 * @param driverClassName The fully qualified name of the driver class
 	 */
-	public static void disableLogging(String driverClassName) {
+	public static void disableLogging(final String driverClassName) {
 		if (driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
 			// MS SQL Server: Disable logging
-			Logger logger = Logger.getLogger("com.microsoft.sqlserver.jdbc");
-			logger.setLevel(Level.OFF);
+			Logger.getLogger("com.microsoft.sqlserver.jdbc").setLevel(Level.OFF);
 		} else if (driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")) {
 			// Derby: Redirect logging (derby.log) to void
 			System.setProperty("derby.stream.error.field", DriverLoader.class.getCanonicalName() + ".DEV_NULL");
@@ -112,7 +108,7 @@ public class DriverLoader {
 	 * @param url The JDBC URL for which to load the driver
 	 * @throws SQLException If the driver cannot be found or loaded
 	 */
-	public static void loadDriverForUrl(String url) throws SQLException {
+	public static void loadDriverForUrl(final String url) throws SQLException {
 		String driverClass = null;
 
 		// Determine which driver to load based on the URL
@@ -140,7 +136,7 @@ public class DriverLoader {
 
 		try {
 			DriverLoader.getInstance().loadDriver(driverClass, true);
-		} catch (ClassNotFoundException e) {
+		} catch (Exception e) {
 			throw new SQLException("Unable to load JDBC driver for URL: " + url, e);
 		}
 	}

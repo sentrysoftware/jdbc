@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class DriverLoaderTest {
 
 	@Test
-	public void testLoadValidDriver() {
+	void testLoadValidDriver() {
 		DriverLoader driverLoader = DriverLoader.getInstance();
 
 		// Test loading a valid driver (H2 in this case)
@@ -18,7 +18,7 @@ class DriverLoaderTest {
 	}
 
 	@Test
-	public void testLoadInvalidDriverThrowsClassNotFoundException() {
+	void testLoadInvalidDriverThrowsClassNotFoundException() {
 		DriverLoader driverLoader = DriverLoader.getInstance();
 
 		// Test loading an invalid driver (which should throw ClassNotFoundException)

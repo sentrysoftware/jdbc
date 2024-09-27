@@ -1,4 +1,5 @@
 # JDBC Client
+
 The JDBC Client allows you to execute SQL queries on various databases through JDBC. It handles:
 
 - Loading the correct JDBC driver based on the database URL.

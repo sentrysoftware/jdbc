@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class JdbcClientTest {
 
 	@Test
-	public void testExecuteSelectQuery() throws SQLException {
+	void testExecuteSelectQuery() throws SQLException {
 		Connection connection = null;
 		try {
 			// Setup in-memory H2 database and create table
@@ -49,7 +49,7 @@ class JdbcClientTest {
 	}
 
 	@Test
-	public void testExecuteInsertQuery() throws SQLException {
+	void testExecuteInsertQuery() throws SQLException {
 		Connection connection = null;
 		try {
 			// Setup in-memory H2 database and create table
