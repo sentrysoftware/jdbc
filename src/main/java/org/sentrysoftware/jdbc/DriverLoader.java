@@ -55,7 +55,7 @@ public class DriverLoader {
 	 *
 	 * @return DriverLoader instance
 	 */
-	public static DriverLoader getInstance() {
+	public static synchronized DriverLoader getInstance() {
 		return SingletonHelper.INSTANCE;
 	}
 
