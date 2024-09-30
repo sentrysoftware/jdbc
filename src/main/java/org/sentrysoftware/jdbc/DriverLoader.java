@@ -24,8 +24,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * A Singleton class to load JDBC drivers only once and in a thread-safe manner.
@@ -78,26 +76,11 @@ public class DriverLoader {
 		throws ClassNotFoundException {
 		if (!LOADED_DRIVERS.contains(driverClassName)) {
 			if (disableLogs) {
-				disableLogging(driverClassName);
+				DatabaseLogUtils.disableLogging(driverClassName);
 			}
 
 			Class.forName(driverClassName);
 			LOADED_DRIVERS.add(driverClassName);
-		}
-	}
-
-	/**
-	 * Disables or redirects logging for specific JDBC drivers.
-	 *
-	 * @param driverClassName The fully qualified name of the driver class
-	 */
-	public static void disableLogging(final String driverClassName) {
-		if (driverClassName.startsWith("com.microsoft.sqlserver.jdbc.SQLServerDriver")) {
-			// MS SQL Server: Disable logging
-			Logger.getLogger("com.microsoft.sqlserver.jdbc").setLevel(Level.OFF);
-		} else if (driverClassName.startsWith("org.apache.derby.jdbc.EmbeddedDriver")) {
-			// Derby: Redirect logging (derby.log) to void
-			System.setProperty("derby.stream.error.field", DriverLoader.class.getCanonicalName() + ".DEV_NULL");
 		}
 	}
 
